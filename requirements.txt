@@ -1,0 +1,17 @@
+# Core
+torch>=2.1
+numpy
+pyyaml
+RestrictedPython>=6.0
+
+# Model loading / evaluation
+transformers>=4.44
+datasets
+
+# RL discovery search (GPU only)
+trl==0.15.2
+unsloth
+peft
+accelerate
+bitsandbytes
+sentencepiece

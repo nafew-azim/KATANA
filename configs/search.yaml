@@ -1,0 +1,67 @@
+# KATANA RL discovery search configuration.
+#
+# Paper-scale settings (Sec. 3.5) are the defaults. The commented "smoke"
+# values reproduce the single-GPU Colab prototype scale and are handy for
+# verifying the pipeline end-to-end in minutes instead of GPU-days.
+
+logging:
+  log_file: pruning_training.log
+
+policy:
+  # Paper discovery runs: DeepSeek-Coder-V2-Lite-Instruct (16B), 4-bit + LoRA.
+  # Any Unsloth-supported code model works (e.g. unsloth/Phi-4 for a cheaper
+  # proxy search, Sec. 4.2 budget ablations).
+  model_name: deepseek-ai/DeepSeek-Coder-V2-Lite-Instruct   # smoke: unsloth/Phi-4
+  max_seq_length: 2048
+  lora_rank: 64                                             # smoke: 16
+  lora_alpha: 128                                           # smoke: 16
+  lora_dropout: 0.05
+  # Attention + MLP projections (Sec. 3.5); smoke: [gate_proj, up_proj, down_proj]
+  target_modules: [q_proj, k_proj, v_proj, o_proj, gate_proj, up_proj, down_proj]
+  gpu_memory_utilization: 0.7
+  random_state: 3407
+
+search:
+  target_sparsity: 0.7           # sparsity s handed to every prune_module call
+  exec_timeout: 60               # wall-clock seconds per candidate ('timeout' stage)
+
+calibration:
+  # Calibration substrate evaluated inside the sandbox for every candidate.
+  # Paper-scale discovery targets LLaVA-1.5-7B, scored on a held-out
+  # 256-sample MSCOCO split rotated every 50 iterations; the default below
+  # is a small substrate for verifying the full loop on a single GPU.
+  model_name: textattack/bert-base-uncased-MRPC
+  dataset: glue
+  subset: mrpc
+  split: train
+  num_samples: 100
+  batch_size: 16
+
+reward:
+  strategy_capacity: 10000
+  initial_param_target: 0.85
+  top_n: 3
+
+grpo:
+  learning_rate: 2.0e-5          # smoke: 5.0e-6
+  lr_scheduler_type: cosine
+  temperature: 0.7
+  beta: 0.02                     # KL penalty coefficient
+  per_device_train_batch_size: 4
+  gradient_accumulation_steps: 2
+  num_generations: 8             # candidate scripts per iteration; smoke: 2
+  max_prompt_length: 2048
+  max_completion_length: 2048
+  max_steps: 1000                # smoke: 3
+  logging_steps: 1
+  save_steps: 50
+  output_dir: checkpoints/katana_search
+  report_to: none
+
+final_evaluation:
+  num_candidates: 3
+  max_length: 1024
+  top_p: 0.95
+  temperature: 0.7
+
+save_path: checkpoints/katana_policy

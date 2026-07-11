@@ -1,0 +1,51 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "katana-vlm"
+version = "1.0.0"
+description = "KATANA: Knowledge-Aligned Topology-Aware Neural Agents for RL-Driven Vision-Language Model Compression (ECCV 2026)"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.9"
+authors = [
+  { name = "Nafew Azim", email = "nafew.azim@northsouth.edu" },
+  { name = "Mir Robab Warish Ali", email = "mir.ali@northsouth.edu" },
+  { name = "Fuad Rahman", email = "fuad@apurbatech.com" },
+  { name = "Nabeel Mohammed", email = "nabeel.mohammed@northsouth.edu" },
+]
+keywords = ["vision-language models", "pruning", "model compression", "reinforcement learning", "GRPO"]
+classifiers = [
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+  "torch>=2.1",
+  "numpy",
+  "pyyaml",
+  "RestrictedPython>=6.0",
+]
+
+[project.optional-dependencies]
+# RL discovery search (GPU): LLM proposer + GRPO stack
+search = [
+  "transformers>=4.44",
+  "datasets",
+  "trl==0.15.2",
+  "unsloth",
+  "peft",
+  "accelerate",
+  "bitsandbytes",
+  "sentencepiece",
+]
+
+[project.urls]
+Repository = "https://github.com/nafew-azim/KATANA"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-dir]
+"" = "src"

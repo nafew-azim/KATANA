@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+
+# Experiment artifacts
+checkpoints/
+*.log
+*.pkl
+
+# Tooling
+.pytest_cache/
+.ruff_cache/
+.claude/
+
+# OS / editors
+.DS_Store
+.idea/
+.vscode/

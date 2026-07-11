@@ -1,0 +1,32 @@
+cff-version: 1.2.0
+message: "If you use KATANA or KIRI in your research, please cite the paper below."
+title: "KATANA: Knowledge-Aligned Topology-Aware Neural Agents for RL-Driven Vision-Language Model Compression"
+authors:
+  - family-names: Azim
+    given-names: Nafew
+    affiliation: North South University
+  - family-names: Ali
+    given-names: Mir Robab Warish
+    affiliation: North South University
+  - family-names: Rahman
+    given-names: Fuad
+    affiliation: Apurba Technologies
+  - family-names: Mohammed
+    given-names: Nabeel
+    affiliation: North South University
+repository-code: "https://github.com/nafew-azim/KATANA"
+license: MIT
+preferred-citation:
+  type: conference-paper
+  title: "KATANA: Knowledge-Aligned Topology-Aware Neural Agents for RL-Driven Vision-Language Model Compression"
+  authors:
+    - family-names: Azim
+      given-names: Nafew
+    - family-names: Ali
+      given-names: Mir Robab Warish
+    - family-names: Rahman
+      given-names: Fuad
+    - family-names: Mohammed
+      given-names: Nabeel
+  collection-title: "European Conference on Computer Vision (ECCV)"
+  year: 2026
